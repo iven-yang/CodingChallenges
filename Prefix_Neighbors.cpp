@@ -101,7 +101,7 @@ vector<string> split(string &str, string sep){//split string based on a seperato
     }
     return arr;
 }
-vector<vector<string>> powerSet(vector<string> &arr){//find all subsets of s without prefix neighbors
+vector<vector<string>> powerSet(vector<string> &arr){//find all subsets of arr without prefix neighbors
     //vector<string> arr = s;
     int n = arr.size();
     vector<string> list;
