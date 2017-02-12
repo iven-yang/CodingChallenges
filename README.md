@@ -1,2 +1,2 @@
 # CodingChallenges
-Just coding challenges/interesting problems
+Various coding challenges/interesting problems
