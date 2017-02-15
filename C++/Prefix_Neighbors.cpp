@@ -5,21 +5,22 @@ https://www.hackerrank.com/contests/rookierank-2/challenges/prefix-neighbors
 Screenshot:
 http://puu.sh/tYyeP.png
 
-Working: No (6/20 TC)
-Possible problems: not sure
+Working: Yes
+http://puu.sh/u4JgI.png
 */
 #include <bits/stdc++.h>
 
 using namespace std;
 
 bool isp(string &a, string &b){//is a a prefix of b
-    if(b.size()>=a.size()){
+    if(b.size()>a.size()){
         if(a==b.substr(0,a.size()))
             return true;
     }
     return false;
 }
 
+/*
 bool ispn(vector<string> &s, string &a, string &b){//are a and b prefix neightbors
     int samecount = 0;
     
@@ -64,15 +65,7 @@ bool doespne(vector<string> &s, vector<string> &test){//are there are prefix nei
     }
     return false;
 }
-
-bool vispn(vector<string> &s, vector<string> &a, string &b){//would adding b to a make prefix neighbors exist in a
-    for(int i=0;i<a.size();++i){
-        if(ispn(s,a[i],b)){
-            return true;
-        }
-    }
-    return false;
-}
+*/
 
 int val(string &a){//total ascii value of a string
     int value = 0;
@@ -90,6 +83,7 @@ int vval(vector<string> &a){//total ascii value of vector<string>
     return value;
 }
 
+/*
 vector<string> split(string &str, string sep){//split string based on a seperator
     char* cstr=const_cast<char*>(str.c_str());
     char* current;
@@ -101,6 +95,7 @@ vector<string> split(string &str, string sep){//split string based on a seperato
     }
     return arr;
 }
+
 vector<vector<string>> powerSet(vector<string> &arr){//find all subsets of arr without prefix neighbors
     //vector<string> arr = s;
     int n = arr.size();
@@ -129,37 +124,41 @@ vector<vector<string>> powerSet(vector<string> &arr){//find all subsets of arr w
     }
     
     return allsubsets;
-}
+}*/
 
 int main(){
     int n;
     cin >> n;
     vector<string> s(n);
+	bool pn[n];
     for(int s_i = 0; s_i < n; s_i++){
        cin >> s[s_i];
+	   pn[s_i]=true;
     }
     // your code goes here
-    sort(s.begin(),s.end(), std::greater<string>());
+    sort(s.begin(),s.end());
     
-    vector<vector<string>> sub = powerSet(s);
+    //vector<vector<string>> sub = powerSet(s);
     
-    /*for(int i=0;i<sub.size();++i){
-        for(int j=0;j<sub[i].size();++j){
-            cout << sub[i][j] << " ";
-        }
-        cout << endl;
-    }*/
+    for(int i=n-1;i>=0;--i){
+        if(pn[i]){
+			for(int j=i-1;j>=0;--j){
+				if(isp(s[j],s[i])){
+					pn[j] = false;
+					break;
+				}
+				//cout << sub[i][j] << " ";
+			}
+		}
+        //cout << endl;
+    }
 
-    int maxv=0, tmp;
+    int maxv=0;
     
-    //int index;
-    
-    for(int i=0;i<sub.size();++i){
-        tmp = vval(sub[i]);
-        if(tmp>maxv){
-            maxv=tmp;
-            //index=i;
-        }
+    for(int i=0;i<n;++i){
+        if(pn[i]){
+			maxv+=val(s[i]);
+		}
     }
     
     /*for(int i=0;i<sub[index].size();++i){
