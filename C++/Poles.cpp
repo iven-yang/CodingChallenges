@@ -9,8 +9,6 @@ Working: 8/11
 
 using namespace std;
 
-static int lowestx;
-
 /*
     Cost from moving pole with weight w from x1 to x2
 */
@@ -43,7 +41,7 @@ int totalcost(const vector<pair<int, int>> &polesi, const vector<int> &polesf){
     Finds all subsets of length 'k' from 'poles'.
     Inserts these into 'positions'.
 */
-void allSubsets(const vector<pair<int, int>> &poles, int k, int start, int len, vector<bool> &used, vector<vector<int>> &positions){
+void allSubsets(const vector<pair<int, int>> &poles, int k, int start, int len, vector<bool> &used, vector<vector<int>> &positions, int lowestx){
     if(len==k){
         vector<int> tpos;
         for(int i=0; i<poles.size(); ++i){
@@ -64,10 +62,10 @@ void allSubsets(const vector<pair<int, int>> &poles, int k, int start, int len, 
     }
     
     used[start] = true;
-    allSubsets(poles, k, start + 1, len + 1, used, positions);
+    allSubsets(poles, k, start + 1, len + 1, used, positions, lowestx);
     
     used[start] = false;
-	allSubsets(poles, k, start + 1, len, used, positions);
+	allSubsets(poles, k, start + 1, len, used, positions, lowestx);
     
 }
 
@@ -77,6 +75,8 @@ int main(){
     cin >> n >> k;
     
     vector<pair<int, int>> poles(n);
+    
+    int lowestx;
     
     for(int a0 = 0; a0 < n; a0++){
         int x_i;
@@ -90,7 +90,7 @@ int main(){
     vector<vector<int>> positions;
     vector<bool> used(n, false);
     
-    allSubsets(poles, k, 0, 0, used, positions);
+    allSubsets(poles, k, 0, 0, used, positions, lowestx);
     
     /*for(int i=0;i<positions.size();++i){
         for(int j=0;j<k;++j){
