@@ -20,10 +20,10 @@ int charge(int x1, int x2, int w){
     Cost of moving poles from positions in polesi to positions in polesf
     Weight is contained for each pole i in get<1>(polesi[i])
 */
-int totalcost(const vector<pair<int, int>> &polesi, const vector<int> &polesf){
+int totalcost(const vector<array<int,2>> &polesi, const vector<int> &polesf){
     int totcost = 0;
     for(int i=0; i<polesi.size(); ++i){
-        int start = get<0>(polesi[i]);
+        int start = polesi[i][0];
         int dest = polesf[0];
         
         for(int j=0; j<polesf.size() && start>=polesf[j]; ++j){
@@ -31,7 +31,7 @@ int totalcost(const vector<pair<int, int>> &polesi, const vector<int> &polesf){
         }
             
         polesf[i];
-        totcost+=charge(start, dest, get<1>(polesi[i]));
+        totcost+=charge(start, dest, polesi[i][1]);
     }
     return totcost;
 }
@@ -41,12 +41,12 @@ int totalcost(const vector<pair<int, int>> &polesi, const vector<int> &polesf){
     Finds all subsets of length 'k' from 'poles'.
     Inserts these into 'positions'.
 */
-void allSubsets(const vector<pair<int, int>> &poles, int k, int start, int len, vector<bool> &used, vector<vector<int>> &positions, int lowestx){
+void allSubsets(const vector<array<int,2>> &poles, int k, int start, int len, vector<bool> &used, vector<vector<int>> &positions, int lowestx){
     if(len==k){
         vector<int> tpos;
         for(int i=0; i<poles.size(); ++i){
             if(used[i])
-                tpos.push_back(get<0>(poles[i]));
+                tpos.push_back(poles[i][0]);
         }
         sort(tpos.begin(), tpos.end());
         
@@ -74,7 +74,7 @@ int main(){
     int k;
     cin >> n >> k;
     
-    vector<pair<int, int>> poles(n);
+    vector<array<int,2>> poles(n);
     
     int lowestx;
     
@@ -82,7 +82,7 @@ int main(){
         int x_i;
         int w_i;
         cin >> x_i >> w_i;
-        poles[a0] = pair<int,int>(x_i,w_i);
+        poles[a0] = {x_i,w_i};
         if(a0 == 0)
             lowestx = x_i;
     }
