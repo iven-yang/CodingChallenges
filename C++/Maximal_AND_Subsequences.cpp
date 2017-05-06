@@ -11,10 +11,10 @@ https://www.hackerrank.com/contests/world-codesprint-10/challenges/maximal-and-s
 #include <algorithm>
 using namespace std;
 
-void subset(const vector<long long>& A, int k, int start, int currLen, vector<bool>& used, vector<vector<long long>>& subnums) {
+void subset(const vector<long int>& A, int k, int start, int currLen, vector<bool>& used, vector<vector<long int>>& subnums) {
 
 		if (currLen == k) {
-            vector<long long> tmp;
+            vector<long int> tmp;
 			for (int i = 0; i < A.size(); i++) {
 				if (used[i] == true) {
 					tmp.push_back(A[i]);
@@ -34,8 +34,8 @@ void subset(const vector<long long>& A, int k, int start, int currLen, vector<bo
 		subset(A, k, start + 1, currLen, used, subnums);
 	}
 
-long long bite(const vector<long long>& nums){
-    long long sum = nums[0];
+long int bite(const vector<long int>& nums){
+    long int sum = nums[0];
     for(int i=1;i<nums.size();++i){
         sum = sum & nums[i];
     }
@@ -47,22 +47,22 @@ int main() {
     int n,k;
     cin >> n >> k;
     
-    vector<long long> nums(n);
-    vector<vector<long long>> subnums;
+    vector<long int> nums(n);
+    vector<vector<long int>> subnums;
     vector<bool> used(n, false);
     
     for(int i=0;i<n;++i){
         cin >> nums[i];
     }
     
-    long long max=0;
+    long int max=0;
     int num=0;
     
     subset(nums, k, 0, 0, used, subnums);
     
     
     for(int i=0;i<subnums.size();++i){
-        long long tmp = bite(subnums[i]);
+        long int tmp = bite(subnums[i]);
         if(tmp>max){
                 num = 1;
                 max = tmp;
